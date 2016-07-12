@@ -1,0 +1,181 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+//operstions
+#define READ 10
+#define WRITE 11
+///////////////////////
+#define LOAD 20
+#define STORE 21
+//////////////////////////////
+#define ADD 30
+#define SUBTRACT 31
+#define DIVIDE 32
+#define MULTIPLY 33
+////////////////////////////
+#define BRANCH 40            // for
+//////////////////////
+#define NBRANCH 41      //if != > <
+#define ZBRANCH 42         //if ==
+//////////////////////////
+#define HALT 43          //end
+///////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////
+///variables
+/*
+memory[100] // instructions
+
+acc  /// +0000
+
+ints reg =memory[inst counter] // holds the next instruction to be performed
+/// +0000
+
+
+inst counter 00:99
+
+opcode =inst reg /100
+/// 00
+
+operand =inst reg % 100
+///00
+
+switch 12 cases defined before
+
+case(read) :
+///
+
+///
+break;
+
+
+*/
+int main()
+{
+
+printf("*** Welcome to Simpletron! ***\n*** Please enter your program one instruction ***\n*** (or data word) at a time. I will type the ***\n*** location number and a question mark (?). ***\n*** You then type the word for that location. ***\n*** Type the sentinel -99999 to stop entering ***\n*** your program. ***");
+
+  int  initializer,acc , inst_regst , inst_counter , opcode , operand ;
+//read instructions
+//////////////////////////////////////////////
+int memory[100]={0};
+
+initializer=0;
+//////////////////////////////////////////////////
+for(  ;  initializer <100 ;++initializer)
+{    printf(" loc : %d  = inst : " ,initializer);
+     scanf("%d",&memory[initializer]);
+     ///check
+     // 9999: -9999
+     // opcode is valid switch default
+     if(memory[initializer] == -99999 )
+     {
+           initializer=99;
+     }
+     else if (memory[initializer] > 9999 || memory[initializer] < -9999  )
+    {
+
+     printf("error overflow \n");
+     --initializer;
+    }
+else
+    {printf("\n");
+
+    }
+
+     /////////////////////////////////////////////
+
+}
+
+////////////
+//execution
+/////////////////////////////////////////////////////////
+acc=0;
+inst_counter=0;
+inst_regst=0;
+opcode=0;
+operand=0;
+////////////////////////////////////////////////////////
+for(  ; inst_counter <100 ;++inst_counter)
+{
+     inst_regst = memory[inst_counter];
+     opcode=inst_regst/100;
+     operand=inst_regst%100;
+
+
+
+     switch(opcode)
+     {
+     case  READ:
+      printf(" ? ");
+      scanf("%d",&memory[operand]);
+      break;
+      case WRITE:
+     printf("%d \n",memory[operand]);
+        break;
+      case LOAD:
+      acc=memory[operand];
+
+      break;
+      case STORE:
+      memory[operand]=acc;
+
+      break;
+      case ADD:
+      acc+=memory[operand];
+
+      break;
+      case  SUBTRACT:
+        acc-=memory[operand];
+
+         break;
+      case MULTIPLY:
+            acc*=memory[operand];
+
+         break;
+      case DIVIDE:
+ acc/=memory[operand];
+
+
+         break;
+      case BRANCH:
+          inst_counter=(operand-1);
+           break;
+      case NBRANCH:
+           if(acc<0);
+           inst_counter=(operand-1);
+           break;
+      case ZBRANCH:
+           if(acc==0);
+           inst_counter=(operand-1);
+           break;
+      case HALT:
+      inst_counter=99;
+      break;
+
+     }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+    return 0;
+}
